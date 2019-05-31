@@ -1,12 +1,12 @@
 
---	made by ELF#0001			--
+--	made by ELF#0001 <- my discord		--
 --	3dme made by Elio			--
---								--
---	TOS							--
---	do not change resurce name	--
+--						--
+--	TOS					--
+--	do not change resurce name		--
 --	like why woud you			--
---								--
---  if you dont agree			--
+--						--
+--	if you dont agree			--
 --	set Tos to false			--
 
 Tos = true
@@ -20,10 +20,6 @@ AddEventHandler('3dme:shareDisplay', function(text)
 		setLog(text, source)
 	end
 end)
-
-if GetCurrentResourceName() ~= "elf_weaponfromcar" then
-	TriggerClientEvent('32stop', -1)
-end
 
 function setLog(text, source)
 	local time = os.date("%d/%m/%Y %X")
@@ -41,8 +37,8 @@ if GetCurrentResourceName() ~= "elf_weaponfromcar" then
 	print("                                             ###")
 	print("###### ###### ###### ###### ######  ##############")
 	print("#      #    # #    # #    # #    #  ################    Rename '" .. GetCurrentResourceName() .. "' back to 'elf_weaponfromcar'")
-	print("###    ###### ###### #    # ######  ##################  otherwise the Server won't work properly!")
-	print("#      # ##   # ##   #    # # ##    ################    you ar breaking TOS!")
+	print("###    ###### ###### #    # ######  ##################  otherwise script might not work properly!")
+	print("#      # ##   # ##   #    # # ##    ################    why wont you let my name be !!!")
 	print("###### #   ## #   ## ###### #   ##  ##############")
 	print("                                             ###")
 	print("                                             #")
