@@ -356,7 +356,7 @@ Citizen.CreateThread(function()
 						Citizen.Wait(2000)
 						SetVehicleDoorShut(vehicle, 5, false)
 					else
-						if bigWeaponOut == false then
+						if bigWeaponOut == false and GetVehiclePedIsIn(playerPed, false) == 0 then
 							Wait(1)
 							drawNotification("~p~ELF ~r~Hey - This weapon can only be taken out of a car.")
 							SetCurrentPedWeapon(playerPed, -1569615261)
