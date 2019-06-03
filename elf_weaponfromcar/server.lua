@@ -1,15 +1,8 @@
 
---	made by ELF#0001 <- my discord		--
---	3dme made by Elio			--
---						--
---	TOS					--
---	do not change resurce name		--
---	like why woud you			--
---						--
---	if you dont agree			--
---	set Tos to false			--
-
-Tos = true
+--											--
+--		made by ELF#0001 <- my discord		--
+--		3dme made by Elio					--
+--											--
 
 local logEnabled = false
 
