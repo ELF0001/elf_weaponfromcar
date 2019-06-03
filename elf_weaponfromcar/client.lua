@@ -2,16 +2,40 @@
 --   made by ELF#0001 <- my discord --
 --  3dme made by Elio  --
 
--- Settings --
-local color = { r = 250, g = 140, b = 0, alpha = 255 } -- Color of the text 
-local font = 0 -- Font of the text
-local time = 7000 -- Duration of the display of the text : 1000ms = 1sec
+
+
+--   wfc settings   --
+
+local duffle = false -- do not use wip not working -- change if you dont want weapons out of a duffle-bag
+
+local tafbw = true -- Text Above For Big Weapons - change if you dont want text above for the weapons you take out of the car 
+local tafsw = true -- Text Above For Small Weapons -||-
+local tafmw = true -- Text Above For Melee Weapons -||-
+local tafdb = true -- Text Above For Duffle-Bag -||-
+
+local txt = "The person" -- /me text
+local bwtxt = "* The person takes a weapon out of the car's Trunk. *"
+local dbtxt = "* The person takes a weapon out of the dufflebag. *"
+local dbtxterr = "Hey - This weapon can only be taken out of a car or a dufflebag."
+local bwtxterr = "Hey - This weapon can only be taken out of a car."
+local swtxt = "* The person takes a weapon out. *"
+local mwtxt = "* The person takes a melee weapon out. *"
+
+
+
+-- 3dtext settings --
+
+local color = { r = 250, g = 140, b = 0, alpha = 255 } -- color of the text 
+local font = 0 -- font of the text
+local time = 4 -- duration of the display of the text in seconds
 local background = {
-    enable = false,
-    color = { r = 35, g = 35, b = 35, alpha = 200 },
+    enable = false, -- background toggle
+    color = { r = 35, g = 35, b = 35, alpha = 200 }, -- background color
 }
-local chatMessage = false
+local chatMessage = false 
 local dropShadow = false
+
+
 
 -- list of weapons to be taken out of a car
 
@@ -64,6 +88,8 @@ bigweaponslist = {
 	"WEAPON_DIGISCANNER"
 }
 
+
+
 -- list of weapons for small weapons message
 
 smallweaponslist = {
@@ -97,6 +123,8 @@ smallweaponslist = {
 	"WEAPON_STICKYBOMB"
 }
 
+
+
 -- list of weapons for melee weapons message
 
 meleeweaponslist = {
@@ -117,9 +145,9 @@ meleeweaponslist = {
 	"WEAPON_PIPEWRENCH"
 }
 
---   end af settings   --
 
 
+--   end of settings   --
 
 --   made by ELF#0001  --
 --  3dme made by Elio  --
@@ -133,7 +161,7 @@ local nbrDisplaying = 1
 -- do not edit !!
 
 RegisterCommand('me', function(source, args)
-    local text = '* The person' -- edit here if you want to change the language : EN: the person / FR: la personne
+    local text = "* "..txt 
     for i = 1,#args do
         text = text .. ' ' .. args[i]
     end
@@ -165,7 +193,7 @@ function Display(mePlayer, text, offset)
     end
 
     Citizen.CreateThread(function()
-        Wait(time)
+        Wait(time*1000)
         displaying = false
     end)
     Citizen.CreateThread(function()
@@ -338,7 +366,7 @@ meleeWeaponOut = false
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(1)
+		Wait(250)
 
 		playerPed = GetPlayerPed(-1)
 		if playerPed then
@@ -351,31 +379,65 @@ Citizen.CreateThread(function()
 					if GetVehiclePedIsIn(playerPed, false) == 0 and DoesEntityExist(vehicle) and IsEntityAVehicle(vehicle) and bigWeaponOut == false then
 						bigWeaponOut = true
 						SetVehicleDoorOpen(vehicle, 5, false, false)
-						local text = "* The person takes a weapon out of the car's Trunk. *"
-						TriggerServerEvent('3dme:shareDisplay', text)
+						if tafbw == true then
+							local text = bwtxt
+							TriggerServerEvent('3dme:shareDisplay', text)
+						end
 						Citizen.Wait(2000)
 						SetVehicleDoorShut(vehicle, 5, false)
 					else
-						if bigWeaponOut == false and GetVehiclePedIsIn(playerPed, false) == 0 then
-							Wait(1)
-							drawNotification("~p~ELF ~r~Hey - This weapon can only be taken out of a car.")
-							SetCurrentPedWeapon(playerPed, -1569615261)
+						if duffle == true then
+							if IsPedModel(playerPed,1885233650) and bigWeaponOut == false and GetVehiclePedIsIn(playerPed, false) == 0 then -- male
+								if Citizen.invokeNative(N_0x39d55a620fcb6a3a(playerPed,5,45,0)) then
+									bigWeaponOut = true
+									if tafdb == true then
+										local text = dbtxt
+										TriggerServerEvent('3dme:shareDisplay', text)
+									end
+								end
+							else
+								if IsPedModel(playerPed,-1667301416) and bigWeaponOut == false and GetVehiclePedIsIn(playerPed, false) == 0 then -- female
+									if Citizen.invokeNative(N_0x39d55a620fcb6a3a(playerPed,5,45,0)) then
+										bigWeaponOut = true
+										if tafdb == true then
+											local text = dbtxt
+											TriggerServerEvent('3dme:shareDisplay', text)
+										end
+									end
+								else
+									if bigWeaponOut == false and GetVehiclePedIsIn(playerPed, false) == 0 then
+									Wait(1)
+									drawNotification("~p~ELF ~r~"..dbtxterr.."")
+									SetCurrentPedWeapon(playerPed, -1569615261)
+									end
+								end
+							end
+						else
+							if bigWeaponOut == false and GetVehiclePedIsIn(playerPed, false) == 0 then
+								Wait(1)
+								drawNotification("~p~ELF ~r~"..bwtxterr.."")
+								SetCurrentPedWeapon(playerPed, -1569615261)
+							end
 						end
 					end
 				end
 				if GetVehiclePedIsIn(playerPed, false) == 0 and isWeaponSmall(weapon) then
 					if smallWeaponOut == false then
 						smallWeaponOut = true
-						local text = "* The person takes a weapon out. *"
-						TriggerServerEvent('3dme:shareDisplay', text)
+						if tafsw == true then
+							local text = swtxt
+							TriggerServerEvent('3dme:shareDisplay', text)
+						end
 						Citizen.Wait(100)
 					end
 				end
 				if GetVehiclePedIsIn(playerPed, false) == 0 and isWeaponMelee(weapon) then
 					if meleeWeaponOut == false then
 						meleeWeaponOut = true
-						local text = "* The person takes a melee weapon out. *"
-						TriggerServerEvent('3dme:shareDisplay', text)
+						if tafmw == true then
+							local text = mwtxt
+							TriggerServerEvent('3dme:shareDisplay', text)
+						end
 						Citizen.Wait(100)
 					end
 				end
