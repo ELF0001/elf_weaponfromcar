@@ -259,6 +259,13 @@ RegisterCommand('vinfo', function(source, args)
 	end
 end)
 
+RegisterCommand('cinfo', function(source, args)
+    playerPed = GetPlayerPed(-1)
+	if playerPed then
+		getCustomization()
+	end
+end)
+
 -- do not edit !!
 
 allweaponslist = {
@@ -388,21 +395,29 @@ Citizen.CreateThread(function()
 					else
 						if duffle == true then
 							if IsPedModel(playerPed,1885233650) and bigWeaponOut == false and GetVehiclePedIsIn(playerPed, false) == 0 then -- male
-								if Citizen.invokeNative(N_0x39d55a620fcb6a3a(playerPed,5,45,0)) then
+								--drawNotification("* " ..GetPedDrawableVariation(playerPed,5).. "," ..GetPedTextureVariation(playerPed,5).. "," ..GetPedPaletteVariation(playerPed,5).. " *")
+								if GetPedDrawableVariation(playerPed,5) == 45 and GetPedTextureVariation(playerPed,5) == 0 and GetPedPaletteVariation(playerPed,5) == 0 then
 									bigWeaponOut = true
 									if tafdb == true then
 										local text = dbtxt
 										TriggerServerEvent('3dme:shareDisplay', text)
 									end
+								else
+									Wait(1)
+									drawNotification("~p~ELF ~r~"..dbtxterr.."")
+									SetCurrentPedWeapon(playerPed, -1569615261)
 								end
-							else
+							else	
 								if IsPedModel(playerPed,-1667301416) and bigWeaponOut == false and GetVehiclePedIsIn(playerPed, false) == 0 then -- female
-									if Citizen.invokeNative(N_0x39d55a620fcb6a3a(playerPed,5,45,0)) then
+									--drawNotification("* " ..GetPedDrawableVariation(playerPed,5).. "," ..GetPedTextureVariation(playerPed,5).. "," ..GetPedPaletteVariation(playerPed,5).. " *")
+									if GetPedDrawableVariation(playerPed,5) == 45 and GetPedTextureVariation(playerPed,5) == 0 and GetPedPaletteVariation(playerPed,5) == 0 then
 										bigWeaponOut = true
 										if tafdb == true then
 											local text = dbtxt
 											TriggerServerEvent('3dme:shareDisplay', text)
 										end
+									else
+										SetCurrentPedWeapon(playerPed, -1569615261)
 									end
 								else
 									if bigWeaponOut == false and GetVehiclePedIsIn(playerPed, false) == 0 then
@@ -450,7 +465,7 @@ end)
 
 Citizen.CreateThread(function()
 	while true do
-		Wait(1)
+		Wait(500)
 		
 		playerPed = GetPlayerPed(-1)
 		if playerPed then
@@ -466,7 +481,21 @@ Citizen.CreateThread(function()
 			if not isWeaponMelee(weapon) and meleeWeaponOut == true then
 				Wait(100)
 				meleeWeaponOut = false
-			end	
+			end
+			--[[
+			if IsPedModel(playerPed,1885233650) and bigWeaponOut == true then
+				if GetPedDrawableVariation(playerPed,5) ~= 45 or GetPedTextureVariation(playerPed,5) ~= 0 or GetPedPaletteVariation(playerPed,5) ~= 0 then
+					Wait(100)
+					bigWeaponOut = false
+				end
+			end
+			if IsPedModel(playerPed,-1667301416) and bigWeaponOut == true then
+				if GetPedDrawableVariation(playerPed,5) ~= 45 or GetPedTextureVariation(playerPed,5) ~= 0 or GetPedPaletteVariation(playerPed,5) ~= 0 then
+					Wait(100)
+					bigWeaponOut = false
+				end
+			end
+			]]--
 		end
 	end
 end)
@@ -555,4 +584,28 @@ function drawNotification(Notification)
 	SetNotificationTextEntry('STRING')
 	AddTextComponentString(Notification)
 	DrawNotification(false, false)
+end
+
+function getCustomization()
+	local ped = GetPlayerPed(-1)
+
+	local custom = {}
+
+	custom.modelhash = GetEntityModel(ped)
+
+	-- ped parts
+	for i=0,20 do -- index limit to 20
+		custom[i] = {GetPedDrawableVariation(ped,i), GetPedTextureVariation(ped,i), GetPedPaletteVariation(ped,i)}
+		drawNotification("ped " ..GetPedDrawableVariation(ped,i).. " " ..GetPedTextureVariation(ped,i).. " " ..GetPedPaletteVariation(ped,i).. " ped")
+	end
+
+	-- props
+	for i=0,10 do -- index limit to 10
+		custom["p"..i] = {GetPedPropIndex(ped,i), math.max(GetPedPropTextureIndex(ped,i),0)}
+		drawNotification("props " ..GetPedPropIndex(ped,i).. " " ..math.max(GetPedPropTextureIndex(ped,i),0).. " props")
+	end
+
+	
+
+	return custom
 end
