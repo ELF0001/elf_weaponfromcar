@@ -14,7 +14,7 @@ local tafmw = true -- Text Above For Melee Weapons -||-
 local tafdb = true -- Text Above For Duffle-Bag -||-
 
 local txt = "The person" -- /me text
-local bwtxt = "* The person takes a weapon out of the car's Trunk. *"
+local bwtxt = "* The person takes a weapon out of the car's trunk. *"
 local dbtxt = "* The person takes a weapon out of the dufflebag. *"
 local dbtxterr = "Hey - This weapon can only be taken out of a car or a dufflebag."
 local bwtxterr = "Hey - This weapon can only be taken out of a car."
