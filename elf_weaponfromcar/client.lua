@@ -6,7 +6,7 @@
 
 --   wfc settings   --
 
-local duffle = false -- do not use wip not working -- change if you dont want weapons out of a duffle-bag
+local duffle = true -- change if you dont want weapons out of a duffle-bag
 
 local tafbw = true -- Text Above For Big Weapons - change if you dont want text above for the weapons you take out of the car 
 local tafsw = true -- Text Above For Small Weapons -||-
