@@ -13,13 +13,13 @@ local tafsw = true -- Text Above For Small Weapons -||-
 local tafmw = true -- Text Above For Melee Weapons -||-
 local tafdb = true -- Text Above For Duffle-Bag -||-
 
-local txt = "The person" -- /me text
-local bwtxt = "* The person takes a weapon out of the car's trunk. *"
-local dbtxt = "* The person takes a weapon out of the dufflebag. *"
-local dbtxterr = "Hey - This weapon can only be taken out of a car or a dufflebag."
-local bwtxterr = "Hey - This weapon can only be taken out of a car."
-local swtxt = "* The person takes a weapon out. *"
-local mwtxt = "* The person takes a melee weapon out. *"
+local txt = "" -- /me text
+local bwtxt = "Persoon pakt zwaar wapen uit kofferbak."
+local dbtxt = "Persoon pakt zwaar wapen uit tas."
+local dbtxterr = "Dit wapen mag je alleen uit een tas of kofferbak pakken."
+local bwtxterr = "Dit wapen mag je alleen uit een kofferbak pakken."
+local swtxt = "Persoon trekt vuurwapen"
+local mwtxt = "Persoon pakt een handwapen"
 
 
 
