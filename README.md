@@ -1,3 +1,8 @@
+# Attention
+this is from 2019
+and it is not being updated
+so i will soon remove this from my github
+
 # elf_weaponfromcar
 fivem lua force players to take a weapon from a car or dufflebag
 https://forum.fivem.net/t/release-weaponfromcar/550715
